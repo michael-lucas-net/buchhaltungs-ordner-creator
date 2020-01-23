@@ -1,4 +1,6 @@
 
+import folders
+
 def showWelcome()   :
     divier = "=============================="
 
@@ -7,5 +9,7 @@ def showWelcome()   :
     print("       Ordner-Erstellung")
     print("    (c) 2020 Michael Lucas")
     print(divier)
+
+    folders.createFolder("../", "yehaw")
 
 showWelcome()
