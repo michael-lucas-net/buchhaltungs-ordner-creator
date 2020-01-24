@@ -1,6 +1,7 @@
 
 import folders
 import names
+import sys
 
 def showWelcome():
     divier = "=============================="
@@ -14,11 +15,22 @@ def showWelcome():
 def ask(what):
     return str(input(what));
 
-def start():
-    showWelcome()
+# Prüft, ob die eingegebene Zahl legal ist
+def validate(val):
+    length = len(val)
 
-    year = ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
-    
+    if (length != 4):
+        print("Illegaler Längenwert!")
+        return False
+
+    if (not val.isdigit()):
+        print("Keine Zahl!")
+        return False
+
+    return True
+
+# Läuft alle Quartale durch und erstellt Ordner (Struktur: Sehe folders.py)
+def createFolders(year):
     for i in range(1,5):
         quarter = names.findQuarter(str(i) + " Quartal")
         quarterFolder = year + "/" + quarter[0] + "/"
@@ -32,8 +44,19 @@ def start():
         for month in months:
             folders.createFolder(quarterFolder, month)            
 
-            # Eingang, Ausgang- Ordner erstellen
+            # Eingang- und Ausgang- Ordner erstellen
             for folderName in names.folderNames:
                 folders.createFolder(quarterFolder + month + "/", folderName)
+
+def start():
+    showWelcome()
+
+    year = ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
+
+    # Prüfen, ob zahl valide ist
+    if (not validate(year)):
+        sys.exit(1)
+    
+    createFolders(year)
 
 start()
