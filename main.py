@@ -19,24 +19,21 @@ def start():
 
     year = ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
     
+    for i in range(1,5):
+        quarter = names.findQuarter(str(i) + " Quartal")
+        quarterFolder = year + "/" + quarter[0] + "/"
+        months = quarter[1]
 
-    quarterNumber = ask("Fuer welches Quartal sollen die Ordner erstellt werden? ")
-    quarter = names.findQuarter(quarterNumber + " Quartal")
+        # Jahr, Quartal und Konto erstellen
+        folders.createFolder("./", year)
+        folders.createFolder("./", quarterFolder)
+        folders.createFolder(quarterFolder,"Konto")
 
-    quarterFolder = year + "/" + quarter[0]
+        for month in months:
+            folders.createFolder(quarterFolder, month)            
 
-    folders.createFolder("./", year)
-    folders.createFolder("./", quarterFolder)
-
-    months = quarter[1]
-
-    for month in months:
-        currentFolder = quarterFolder + "/" + month
-        folders.createFolder(quarterFolder, "/" + month)
-        folders.createFolder(quarterFolder, "/" + "Konto")
-
-        for folderName in names.folderNames:
-            folders.createFolder(currentFolder + "/", folderName)
-
+            # Eingang, Ausgang- Ordner erstellen
+            for folderName in names.folderNames:
+                folders.createFolder(quarterFolder + month + "/", folderName)
 
 start()
