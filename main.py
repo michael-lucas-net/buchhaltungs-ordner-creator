@@ -1,6 +1,6 @@
 
-import folders
-import names
+import helper/folders
+import helper/names
 import sys
 
 def showWelcome():
@@ -13,9 +13,9 @@ def showWelcome():
     print(divier)
 
 def ask(what):
-    return str(input(what));
+    return str(input(what))
 
-# Prüft, ob die eingegebene Zahl legal ist
+# Prueft, ob die eingegebene Zahl legal ist
 def validate(val):
     length = len(val)
 

@@ -13,4 +13,4 @@ quarters = [
 def findQuarter(quarter):
     for qu in quarters:
         if quarter == qu[0]:
-            return qu;
+            return qu
