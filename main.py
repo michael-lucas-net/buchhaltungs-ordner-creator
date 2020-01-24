@@ -1,6 +1,5 @@
 
-import helper/folders
-import helper/names
+from helper import names, folders
 import sys
 
 def showWelcome():
