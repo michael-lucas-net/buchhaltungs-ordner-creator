@@ -14,11 +14,9 @@ def showWelcome():
 def ask(what):
     return str(input(what))
 
-# Prueft, ob die eingegebene Zahl legal ist
+# Prueft, ob die eingegebene Zahl valide ist
 def validate(val):
-    length = len(val)
-
-    if (length != 4):
+    if (len(val) != 4):
         print("Illegaler Längenwert!")
         return False
 
@@ -40,6 +38,7 @@ def createFolders(year):
         folders.createFolder("./", quarterFolder)
         folders.createFolder(quarterFolder,"Konto")
 
+        # Monate erstellen
         for month in months:
             folders.createFolder(quarterFolder, month)            
 
