@@ -31,7 +31,6 @@ def createFolder(path, name):
 def deleteFolder(path):
     if folderExists(path):
         os.rmdir(path)
-
         
 # Runs through all quarters and creates folders 
 # (structure: See folders.py)
