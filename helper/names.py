@@ -1,7 +1,7 @@
-# Ordnernamen, die in jedem Monat zu finden sein sollen
+# Folder names to be found in each month
 folderNames = ["Eingehend", "Ausgehend"]
 
-# Jedes Quartal
+# Each Quarter
 quarters = [
     ["1 Quartal", ["1 Januar", "2 Februar", "3 Maerz"]],  
     ["2 Quartal", ["4 April", "5 Mai", "6 Juni"]], 
@@ -9,7 +9,7 @@ quarters = [
     ["4 Quartal", ["10 Oktober", "11 November", "12 Dezember"]],
 ]
 
-# Wird aufgerufen mit z.B. findQuarter('1 Quartal')
+# Called with e.g. findQuarter('1 Quartal')
 def findQuarter(quarter):
     for qu in quarters:
         if quarter == qu[0]:
