@@ -1,6 +1,5 @@
 
-from helper import names, folders
-import sys
+from helper import names, folders, functions
 
 def showWelcome():
     divier = "=============================="
@@ -11,20 +10,6 @@ def showWelcome():
     print("    (c) 2020 Michael Lucas")
     print(divier)
 
-def ask(what):
-    return str(input(what))
-
-# Prueft, ob die eingegebene Zahl valide ist
-def validate(val):
-    if (len(val) != 4):
-        print("Illegaler Längenwert!")
-        return False
-
-    if (not val.isdigit()):
-        print("Keine Zahl!")
-        return False
-
-    return True
 
 # Läuft alle Quartale durch und erstellt Ordner (Struktur: Sehe folders.py)
 def createFolders(year):
@@ -49,11 +34,9 @@ def createFolders(year):
 def start():
     showWelcome()
 
-    year = ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
-
-    # Prüfen, ob zahl valide ist
-    if (not validate(year)):
-        sys.exit(1)
+    year = "0"
+    while not functions.validateYear(year):
+        year = functions.ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
     
     createFolders(year)
 

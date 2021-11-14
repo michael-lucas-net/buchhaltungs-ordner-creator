@@ -23,3 +23,7 @@ def createFolder(path, name):
     folderName = path + "/" + name
     if not folderExists(folderName):
         os.makedirs(folderName)
+
+def deleteFolder(path):
+    if folderExists(path):
+        os.rmdir(path)
