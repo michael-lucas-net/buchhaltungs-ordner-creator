@@ -1,6 +1,4 @@
 import unittest
-
-# from helper import functions
 from helper import functions, folders
 
 class TestFunctions(unittest.TestCase):
