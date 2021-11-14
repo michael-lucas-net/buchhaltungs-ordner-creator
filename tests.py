@@ -39,9 +39,4 @@ class TestFolders(unittest.TestCase):
 
         # test if folder is deleted
         self.assertFalse(folders.folderExists('./deleteMe'))
-
-
-      
-
-
         
