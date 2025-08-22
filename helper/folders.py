@@ -28,6 +28,8 @@ def folder_exists(path: str) -> bool:
     Returns:
         True wenn der Ordner existiert, False sonst
     """
+    if path is None or not isinstance(path, str):
+        return False
     return os.path.exists(path) and os.path.isdir(path)
 
 def create_folder(path: str, name: str) -> bool:
@@ -41,6 +43,13 @@ def create_folder(path: str, name: str) -> bool:
         True wenn der Ordner erfolgreich erstellt wurde, False sonst
     """
     try:
+        if path is None or name is None or not isinstance(path, str) or not isinstance(name, str):
+            return False
+            
+        # Check for empty or whitespace-only strings
+        if not path.strip() or not name.strip():
+            return False
+            
         folder_path = Path(path) / name
         if not folder_exists(str(folder_path)):
             folder_path.mkdir(parents=True, exist_ok=True)
@@ -60,6 +69,9 @@ def delete_folder(path: str) -> bool:
         True wenn der Ordner erfolgreich gelöscht wurde, False sonst
     """
     try:
+        if path is None or not isinstance(path, str):
+            return False
+            
         if folder_exists(path):
             os.rmdir(path)
             return True
@@ -78,6 +90,9 @@ def create_bh_folders(year: str) -> bool:
         True wenn alle Ordner erfolgreich erstellt wurden, False sonst
     """
     try:
+        if year is None or not isinstance(year, str) or year.strip() == "":
+            return False
+            
         for i in range(1, 5):
             quarter = helper.names.find_quarter(f"{i} Quartal")
             if quarter is None:
