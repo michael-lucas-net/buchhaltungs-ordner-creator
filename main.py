@@ -1,21 +1,31 @@
 from helper import folders, functions
 
-def showWelcome():
-    divier = "=============================="
+def show_welcome():
+    """Zeigt die Willkommensnachricht an."""
+    divider = "=============================="
 
-    print(divier)
+    print(divider)
     print("        # WILLKOMMEN #")
     print("       Ordner-Erstellung")
     print("    (c) 2020-2021 Michael Lucas")
-    print(divier)
+    print(divider)
 
 def main():
-    showWelcome()
+    """Hauptfunktion des Programms."""
+    try:
+        show_welcome()
 
-    year = "0"
-    while not functions.validateYear(year):
-        year = functions.ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
-    
-    folders.createBhFolders(year)
+        year = "0"
+        while not functions.validate_year(year):
+            year = functions.ask("Fuer welches Jahr sollen die Ordner erstellt werden? ")
+        
+        folders.create_bh_folders(year)
+        print("Ordner erfolgreich erstellt!")
+        
+    except KeyboardInterrupt:
+        print("\nProgramm wurde abgebrochen.")
+    except Exception as e:
+        print(f"Ein Fehler ist aufgetreten: {e}")
 
-main()
+if __name__ == "__main__":
+    main()

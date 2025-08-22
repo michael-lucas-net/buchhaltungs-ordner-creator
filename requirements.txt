@@ -1,0 +1,2 @@
+# Python Version: 3.7+
+# Keine externen Abhängigkeiten erforderlich - nur Standardbibliothek

@@ -1,56 +1,114 @@
 import os
+from pathlib import Path
+from typing import List
 import helper.names
 
-# structure
+# Structure
 """
 2020
 ├── 1 Quartal
-│   ├── 1 Januar
-│   │   ├── Ausgehend
-│   │   └── Eingehend
-│   ├── 2 Februar
-│   │   ├── Ausgehend
-│   │   └── Eingehend
-│   ├── 3 Maerz
-│   │   ├── Ausgehend
-│   │   └── Eingehend
-│   └── Konto
+│   ├── 1 Januar
+│   │   ├── Ausgehend
+│   │   └── Eingehend
+│   ├── 2 Februar
+│   │   ├── Ausgehend
+│   │   └── Eingehend
+│   ├── 3 Maerz
+│   │   ├── Ausgehend
+│   │   └── Eingehend
+│   └── Konto
 """
 
-# Checks if a folder exists
-def folderExists(path):
+def folder_exists(path: str) -> bool:
+    """Überprüft, ob ein Ordner existiert.
+    
+    Args:
+        path: Der Pfad zum zu überprüfenden Ordner
+        
+    Returns:
+        True wenn der Ordner existiert, False sonst
+    """
     return os.path.exists(path) and os.path.isdir(path)
 
-# Creates a folder
-def createFolder(path, name):
-    folderName = path + "/" + name
-    if not folderExists(folderName):
-        os.makedirs(folderName)
-
-# Deletes a folder
-def deleteFolder(path):
-    if folderExists(path):
-        os.rmdir(path)
+def create_folder(path: str, name: str) -> bool:
+    """Erstellt einen Ordner.
+    
+    Args:
+        path: Der Basis-Pfad
+        name: Der Name des zu erstellenden Ordners
         
-# Runs through all quarters and creates folders 
-# (structure: See folders.py)
-def createBhFolders(year):
-    for i in range(1,5):
-        quarter = helper.names.findQuarter(str(i) + " Quartal")
-        quarterFolder = year + "/" + quarter[0] + "/"
-        months = quarter[1]
+    Returns:
+        True wenn der Ordner erfolgreich erstellt wurde, False sonst
+    """
+    try:
+        folder_path = Path(path) / name
+        if not folder_exists(str(folder_path)):
+            folder_path.mkdir(parents=True, exist_ok=True)
+            return True
+        return True
+    except Exception as e:
+        print(f"Fehler beim Erstellen des Ordners {name}: {e}")
+        return False
 
-        # Create year, quarter and account
-        createFolder("./", year)
-        createFolder("./", quarterFolder)
-        createFolder(quarterFolder,"Konto")
+def delete_folder(path: str) -> bool:
+    """Löscht einen Ordner.
+    
+    Args:
+        path: Der Pfad zum zu löschenden Ordner
+        
+    Returns:
+        True wenn der Ordner erfolgreich gelöscht wurde, False sonst
+    """
+    try:
+        if folder_exists(path):
+            os.rmdir(path)
+            return True
+        return False
+    except Exception as e:
+        print(f"Fehler beim Löschen des Ordners {path}: {e}")
+        return False
 
-        # Create months
-        for month in months:
-            createFolder(quarterFolder, month)            
+def create_bh_folders(year: str) -> bool:
+    """Erstellt die Buchhaltungs-Ordnerstruktur für ein Jahr.
+    
+    Args:
+        year: Das Jahr für das die Ordner erstellt werden sollen
+        
+    Returns:
+        True wenn alle Ordner erfolgreich erstellt wurden, False sonst
+    """
+    try:
+        for i in range(1, 5):
+            quarter = helper.names.find_quarter(f"{i} Quartal")
+            if quarter is None:
+                print(f"Fehler: Quartal {i} nicht gefunden")
+                return False
+                
+            quarter_name, months = quarter
+            quarter_folder = Path(year) / quarter_name
 
-            # Create inbox and outbox folder
-            for folderName in helper.names.folderNames:
-                createFolder(quarterFolder + month + "/", folderName)
+            # Create year, quarter and account folders
+            if not create_folder(".", year):
+                return False
+            if not create_folder(year, quarter_name):
+                return False
+            if not create_folder(str(quarter_folder), "Konto"):
+                return False
 
-    print("Fertig!")
+            # Create months
+            for month in months:
+                month_folder = quarter_folder / month
+                if not create_folder(str(quarter_folder), month):
+                    return False
+
+                # Create inbox and outbox folders
+                for folder_name in helper.names.folder_names:
+                    if not create_folder(str(month_folder), folder_name):
+                        return False
+
+        print("Fertig!")
+        return True
+        
+    except Exception as e:
+        print(f"Fehler beim Erstellen der Ordnerstruktur: {e}")
+        return False
